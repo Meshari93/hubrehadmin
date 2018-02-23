@@ -23,6 +23,5 @@ class DatabaseSeeder extends Seeder
             'model_id' => '1',
             'model_type' => 'App\User',
             ]);
-  
      }
 }

@@ -482,12 +482,8 @@
                                       <th>ID</th>
                                       <td>{{ $property->id }}</td>
                                    </tr>
-
                                    <tr>
                                       <th>Rating</th>
-<<<<<<< HEAD
-
-=======
                                       <td>
                                       @if($property->num_rating != 0)
                                        {{ $property->rating / $property->num_rating  }}
@@ -495,7 +491,7 @@
                                        0
                                       @endif
                                       </td>
->>>>>>> edde6a8bab002d5c8c579a56172459dbe8525b2d
+                                   <tr>
                                       <th>Number Of Rating</th>
                                       <td>{{ $property->num_rating  }}</td>
                                    </tr>

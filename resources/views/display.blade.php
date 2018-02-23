@@ -972,7 +972,7 @@
                        Register to add Comments..!
                        <a href="{{ url('login') }}"> <button  class="btn btn-primary waves-effect" title="Add Oner"><i class="fa fa-trash-o" aria-hidden="true"></i> Login</button></a>
                        <a href="{{ url('register') }}"> <button  class="btn btn-primary waves-effect" title="Add Oner"><i class="fa fa-trash-o" aria-hidden="true"></i> regester</button></a>
-                      @endi
+                      @endif
                      <br>
                      <br>
                      <br>

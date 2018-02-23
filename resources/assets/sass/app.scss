@@ -1,0 +1,47 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+//@import "variables";
+
+// Bootstrap
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Waves Effect Css
+@import "plugins/node-waves/waves";
+
+// Animation Css
+@import "plugins/animate-css/animate";
+
+@import "plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker";
+
+@import "plugins/waitme/waitMe";
+
+//Bootstrap Select Css
+@import "plugins/bootstrap-select/css/bootstrap-select";
+
+// Colorpicker Css
+@import "plugins/bootstrap-colorpicker/css/bootstrap-colorpicker";
+
+// Multi Select Cs
+@import "plugins/multi-select/css/multi-select";
+
+// Bootstrap Spinner Css
+@import "plugins/jquery-spinner/css/bootstrap-spinner";
+
+// Bootstrap Tagsinput Css
+@import "plugins/bootstrap-tagsinput/bootstrap-tagsinput";
+
+// Dropzone Css
+@import "plugins/dropzone/dropzone";
+
+ // noUISlider Css
+@import "plugins/nouislider/nouislider.min";
+
+ // Sweet Alert Css
+@import "plugins/sweetalert/sweetalert";
+
+@import 'structure/imports';
+@import 'layouts/imports';

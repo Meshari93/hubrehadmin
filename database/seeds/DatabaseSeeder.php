@@ -23,12 +23,6 @@ class DatabaseSeeder extends Seeder
             'model_id' => '1',
             'model_type' => 'App\User',
             ]);
-
-        DB::table('roles')->insert([
-            'name' => 'owner',
-            'guard_name' => 'web',
-            'created_at' => '2017-12-18 02:07:36',
-            'updated_at' => '2017-12-18 02:07:36',
-            ]);
+  
      }
 }

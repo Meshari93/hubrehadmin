@@ -49,7 +49,7 @@
                <div class="form-group form-float {{ $errors->has('time_out') ? 'has-error' : ''}}">
                 <div class="form-line">
                   <label class="form-label">Time Out</label>
-                   <input   class="form-control" name="time_out" type="time" id="time_out" value="{{ $property->time_out or ''}}" required>
+                   <input   class="form-control" name="time_out" type="text" id="time_out" value="{{ $property->time_out or ''}}" required>
                    {!! $errors->first('time_out', '
                    <p class="help-block">:message</p>
                    ') !!}

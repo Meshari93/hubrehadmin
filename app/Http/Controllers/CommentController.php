@@ -36,11 +36,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
       $validatedData = $request->validate([
-            'comment' => 'required|alpha_dash|max:500',
+            'comment' => 'required|string|max:500',
             'property_id' => 'required|integer',
           ]);
-
-
        $comment = new Comment;
        $comment->comment = $request->comment;
       $comment->property_id = $request->property_id;

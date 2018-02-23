@@ -67,7 +67,7 @@
                 <!-- <optgroup label="  "> -->
 
                    @foreach ($idserves as $key)
-                    <option  value="{{ $key->id  }}">{{$key->id }} == {{$key->serves }}</option>
+                    <option  value="{{ $key->id  }}">{{$key->serves }}</option>
                     @endforeach
 
                      @foreach($idservessection as $serves )

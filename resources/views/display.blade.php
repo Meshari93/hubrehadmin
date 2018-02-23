@@ -505,14 +505,6 @@
                     <div class="panel panel-default">
                        <div class="panel-heading">Property {{ $property->id }}</div>
                        <div class="panel-body">
-                          <form method="POST" action="{{ url('property' . '/' . $property->id) }}" accept-charset="UTF-8" style="display:inline">
-                             {{ method_field('DELETE') }}
-                             {{ csrf_field() }}
-                             <button type="submit" class="btn btn-danger btn-xs" title="Delete Property" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                          </form>
-                          <a href="{{ url('property/' . $property->id . '/createsection') }}" title="Add Section"><button class="btn btn-success right btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> New Section</button></a>
-                          <br/>
-                          <br/>
                           <div class="table-responsive">
                              <table class="table table-borderless">
                                 <tbody>
@@ -561,15 +553,7 @@
                  <div class="col-md-6">
                     <div class="panel panel-default">
                        <div class="panel-heading">Ouner Information</div>
-                       <div class="panel-body">
-                          <form method="POST" action="{{ url('property' . '/' . $property->id) }}" accept-charset="UTF-8" style="display:inline">
-                             {{ method_field('DELETE') }}
-                             {{ csrf_field() }}
-                             <button type="submit" class="btn btn-danger btn-xs" title="Delete Property" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                          </form>
-                          <a href="{{ url('property/' . $property->id . '/createsection') }}" title="Add Section"><button class="btn btn-success right btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> New Section</button></a>
-                          <br/>
-                          <br/>
+                       <div class="panel-body">                          
                           <div class="table-responsive">
                              <table class="table table-borderless">
                                 <tbody>

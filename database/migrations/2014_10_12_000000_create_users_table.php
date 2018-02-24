@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_num')->nullable();
             $table->date('pirth_day')->nullable();
             $table->string('id_nashioty')->nullable();
-            $table->enum('gender' ['male', 'female'])->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->enum('status', ['stopped', 'wae', 'wap',])->nullable();
             $table->string('nashioty')->nullable();
             $table->rememberToken();

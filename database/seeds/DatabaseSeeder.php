@@ -34,25 +34,9 @@ class DatabaseSeeder extends Seeder
             'model_type' => 'App\User',
             ]);
 
-            for ($i=0; $i < 5; $i++) {
-              DB::table('users')->insert([
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'email' => $faker->unique()->freeEmail,
-                'password' => $password ?: $password = bcrypt('secret'),
-                'location' => $faker->address,
-                'Ip_address' => $faker->ipv4,
-                'phone_num' => $faker->phoneNumber,
-                'pirth_day' => $faker->dateTime($max = '2000-02-25 08:37:17'),
-                'gender' =>    $faker->randomElement($array = array ('male','female')),
-                'id_nashioty' => $faker->numberBetween($min = 1000000000, $max = 1900000000)  ,
-                'status' =>    $faker->randomElement($array = array ('actev', 'blok','stopped')),
-                'nashioty' => $faker->country ,
-                'remember_token' => str_random(10),
-                  ]);
-            }
 
 
-            // $users = factory(App\User::class, 10000)->create();
+
+            $users = factory(App\User::class, 10000)->create();
      }
 }

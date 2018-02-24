@@ -31,9 +31,6 @@ class DatabaseSeeder extends Seeder
             'model_type' => 'App\User',
             ]);
 
-            // $users = factory(App\User::class, 10000)->create();
-            for ($i=0; $i < 10000; $i++) { 
-              # code...
-            }
+            $users = factory(App\User::class, 10000)->create();
      }
 }

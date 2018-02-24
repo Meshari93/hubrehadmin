@@ -12,8 +12,7 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
-
-$factory->define(App\User::class, function (Faker $faker) {
+ $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password = '12341234';
 
     return [
@@ -29,6 +28,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'id_nashioty' => $faker->numberBetween($min = 1000000000, $max = 1900000000)  ,
         'status' =>    $faker->randomElement($array = array ('actev', 'blok','stopped')),
         'nashioty' => $faker->country ,
-        'remember_token' => str_random(10),        
+        'remember_token' => str_random(10),
     ];
 });

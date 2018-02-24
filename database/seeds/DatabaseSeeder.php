@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Generator  ;
-class DatabaseSeeder extends Seeder
+ class DatabaseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +10,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      Faker\Generator $faker
-        // $this->call(UsersTableSeeder::class);
+         // $this->call(UsersTableSeeder::class);
         DB::table('users')->insert([
           'id' => '1',
           'first_name' => 'Meshari',
@@ -35,8 +33,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
 
-
-
+ 
             $users = factory(App\User::class, 10000)->create();
      }
 }

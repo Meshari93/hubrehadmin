@@ -12,6 +12,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        DB::table('users')->insert([
+          'id' => '1',
+          'first_name' => 'Meshari',
+          'last_name' => 'Jabbar',
+          'email' => 'almeshari93@gmail.com',
+          'password' => '$2y$10$vxo0xuxGT/USAk2bpx0puOEhT4uKoeRv5qK23J1Hple2CMob/0B1C',
+        ]);
         DB::table('roles')->insert([
             'name' => 'admin',
             'guard_name' => 'web',
@@ -23,5 +30,7 @@ class DatabaseSeeder extends Seeder
             'model_id' => '1',
             'model_type' => 'App\User',
             ]);
+
+            $users = factory(App\User::class, 10)->create();
      }
 }

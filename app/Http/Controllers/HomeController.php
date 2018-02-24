@@ -30,7 +30,7 @@ class HomeController extends Controller
       return redirect('/property');
       }
       else {
-        return view('home');
+        return redirect('/');
       }
     }
     public function welcome()

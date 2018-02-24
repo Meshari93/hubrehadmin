@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
             'model_type' => 'App\User',
             ]);
 
-            $users = factory(App\User::class, 10)->create();
+            $users = factory(App\User::class, 10000)->create();
      }
 }

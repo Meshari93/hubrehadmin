@@ -12,18 +12,17 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
         "spatie/laravel-permission": "^2.7",
-          "fzaninotto/faker": "~1.4",
-        "ext-gd": " *"
     },
     "require-dev": {
         "appzcoder/crud-generator": "^3.0",
-        "filp/whoops": "~2.0",
-
+        "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
-        "phpunit/phpunit": "~6.0"
+        "phpunit/phpunit": "~6.0",
+        "ext-gd": " *"
     },
     "autoload": {
-        "classmap": [
+        "classmap": [,
+          "filp/whoops": "~2.0",
             "database/seeds",
             "database/factories"
         ],

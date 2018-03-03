@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'us-cdbr-iron-east-05.cleardb.net'),
+            'host' => env('DB_HOST', 'hubreh.cts3z7qtvztr.ap-south-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'heroku_9db479e51a7544d'),
-            'username' => env('DB_USERNAME', 'bbc218e0360222'),
-            'password' => env('DB_PASSWORD', '96830082'),
+            'database' => env('DB_DATABASE', 'hubreh'),
+            'username' => env('DB_USERNAME', 'meshari'),
+            'password' => env('DB_PASSWORD', 'HUBreh54627566'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

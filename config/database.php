@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'hubrehdata.cts3z7qtvztr.ap-south-1.rds.amazonaws.com'),
+            'host' => env('DB_HOST', 'hubrehdatabase.cts3z7qtvztr.ap-south-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'hubrehdata'),
-            'username' => env('DB_USERNAME', 'meshari'),
-            'password' => env('DB_PASSWORD', 'HUBreh54627566'),
+            'database' => env('DB_DATABASE', '78.95.104.214/32'),
+            'username' => env('DB_USERNAME', 'hubreh'),
+            'password' => env('DB_PASSWORD', '54627566'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

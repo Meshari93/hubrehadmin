@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6761c40a-5973-4528-a495-1facf6fcbe1b" name="AWS-Server" url="http://13.126.116.212">
+        <fileTransfer host="13.126.116.212" port="22" privateKey="C:\Users\Dell_M\Desktop\hubrehadmin\HUBREHWEB.pem" rootFolder="/var/www/html" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

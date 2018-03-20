@@ -101,12 +101,11 @@ class CrudCommand extends Command
         foreach ($fieldsArray as $item) {
             $spareParts = explode('#', trim($item));
             $fillableArray[] = $spareParts[0];
+            $modifier = !empty($spareParts[2]) ? $spareParts[2] : 'nullable';
 
             // Process migration fields
             $migrationFields .= $spareParts[0] . '#' . $spareParts[1];
-            if (!preg_match('/' . $spareParts[0] . '/', $validations)) {
-                $migrationFields .= '#nullable';
-            }
+            $migrationFields .= '#' . $modifier;
             $migrationFields .= ';';
         }
 
@@ -132,8 +131,11 @@ class CrudCommand extends Command
         if ($localize == 'yes') {
             $this->call('crud:lang', ['name' => $name, '--fields' => $fields, '--locales' => $locales]);
         }
+
         // For optimizing the class loader
-        $this->callSilent('optimize');
+        if (\App::VERSION() < '5.6') {
+            $this->callSilent('optimize');
+        }
 
         // Updating the Http/routes.php file
         $routeFile = app_path('Http/routes.php');

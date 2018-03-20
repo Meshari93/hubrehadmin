@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'hubrehdatabase.cts3z7qtvztr.ap-south-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', '78.95.104.214/32'),
+            'database' => env('DB_DATABASE', 'hubrehdatabase'),
             'username' => env('DB_USERNAME', 'hubreh'),
             'password' => env('DB_PASSWORD', '54627566'),
             'unix_socket' => env('DB_SOCKET', ''),

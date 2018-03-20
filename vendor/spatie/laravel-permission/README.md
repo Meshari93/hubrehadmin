@@ -1,5 +1,16 @@
 # Associate users with permissions and roles
 
+
+### Sponsor
+
+<table>
+   <tr>
+      <td><img src="http://spatie.github.io/laravel-permission/sponsor-logo.png"></td>
+      <td>If you want to quickly add authentication and authorization to Laravel projects, feel free to check Auth0's Laravel SDK and free plan at <a href="https://auth0.com/overview?utm_source=GHsponsor&utm_medium=GHsponsor&utm_campaign=laravel-permission&utm_content=auth">https://auth0.com/overview</a>.</td>
+   </tr>
+</table>
+
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-permission.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-permission)
 [![Build Status](https://img.shields.io/travis/spatie/laravel-permission/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-permission)
 [![StyleCI](https://styleci.io/repos/42480275/shield)](https://styleci.io/repos/42480275)
@@ -71,6 +82,13 @@ You can publish [the migration](https://github.com/spatie/laravel-permission/blo
 
 ```bash
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
+```
+
+If you're using UUIDs or GUIDs for your `User` models you can update the `create_permission_tables.php` migration and replace `$table->morphs('model')` with:
+
+```php
+$table->uuid('model_id');
+$table->string('model_type');
 ```
 
 After the migration has been published you can create the role- and permission-tables by running the migrations:
@@ -165,6 +183,14 @@ return [
      */
 
     'cache_expiration_time' => 60 * 24,
+    
+    /*
+     * When set to true, the required permission/role names are added to the exception
+     * message. This could be considered an information leak in some contexts, so
+     * the default setting is false here for optimum safety.
+     */
+
+    'display_permission_in_exception' => false,
 ];
 ```
 
@@ -176,19 +202,40 @@ You can install the package via Composer:
 composer require spatie/laravel-permission
 ```
 
-Copy `vendor/spatie/laravel-permission/config/permission.php` to `config/permission.php`. Same for `vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php.stub` to `database/migrations/create_permission_tables.php` (be sure to remove the ".stub" at the end of the file name).
+Copy the required files:
 
-In `bootstrap/app.php`, add the following code below other services providers:
-
-```php
-$app->register(Spatie\Permission\PermissionServiceProvider::class);
-$app->configure('permission');
+```bash
+cp vendor/spatie/laravel-permission/config/permission.php config/permission.php
+cp vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php.stub database/migrations/2018_01_01_000000_create_permission_tables.php
 ```
 
-Then, run your migrations:
+You will also need to create another configuration file at `config/auth.php`. Get it on the Laravel repository or just run the following command:
+
+```bash
+curl -Ls https://raw.githubusercontent.com/laravel/lumen-framework/5.5/config/auth.php -o config/auth.php
+```
+
+Now, run your migrations:
 
 ```bash
 php artisan migrate
+```
+
+Then, in `bootstrap/app.php`, register the middlewares:
+
+```php
+$app->routeMiddleware([
+    'auth'       => App\Http\Middleware\Authenticate::class,
+    'permission' => Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    'role'       => Spatie\Permission\Middlewares\RoleMiddleware::class,
+]);
+```
+
+As well as the configuration and the service provider:
+
+```php
+$app->configure('permission');
+$app->register(Spatie\Permission\PermissionServiceProvider::class);
 ```
 
 ## Usage
@@ -232,6 +279,28 @@ use Spatie\Permission\Models\Permission;
 
 $role = Role::create(['name' => 'writer']);
 $permission = Permission::create(['name' => 'edit articles']);
+```
+
+
+A permission can be assigned to a role using 1 of these methods:
+
+```php
+$role->givePermissionTo($permission);
+$permission->assignRole($role);
+```
+
+Multiple permissions can be synced to a role using 1 of these methods:
+
+```php
+$role->syncPermissions($permissions);
+$permission->syncRoles($roles);
+```
+
+A permission can be removed from a role using 1 of these methods:
+
+```php
+$role->revokePermissionTo($permission);
+$permission->removeRole($role);
 ```
 
 If you're using multiple guards the `guard_name` attribute needs to be set as well. Read about it in the [using multiple guards](#using-multiple-guards) section of the readme.
@@ -297,10 +366,24 @@ You can test if a user has a permission:
 $user->hasPermissionTo('edit articles');
 ```
 
+Or you may pass an integer representing the permission id
+
+```php
+$user->hasPermissionTo('1');
+$user->hasPermissionTo(Permission::find(1)->id);
+$user->hasPermissionTo($somePermission->id);
+```
+
 ...or if a user has multiple permissions:
 
 ```php
 $user->hasAnyPermission(['edit articles', 'publish articles', 'unpublish articles']);
+```
+
+You may also pass integers to lookup by permission id
+
+```php
+$user->hasAnyPermission(['edit articles', 1, 5]);
 ```
 
 Saved permissions will be registered with the `Illuminate\Auth\Access\Gate` class for the default guard. So you can
@@ -601,7 +684,7 @@ php artisan permission:create-role writer
 ```
 
 ```bash
-php artisan permission:create-permission 'edit articles'
+php artisan permission:create-permission "edit articles"
 ```
 
 When creating permissions and roles for specific guards you can specify the guard names as a second argument:
@@ -611,7 +694,7 @@ php artisan permission:create-role writer web
 ```
 
 ```bash
-php artisan permission:create-permission 'edit articles' web
+php artisan permission:create-permission "edit articles" web
 ```
 
 ## Unit Testing
@@ -658,11 +741,9 @@ Two notes about Database Seeding:
 	        // create roles and assign existing permissions
 	        $role = Role::create(['name' => 'writer']);
 	        $role->givePermissionTo('edit articles');
-	        $role->givePermissionTo('delete articles');
 
 	        $role = Role::create(['name' => 'admin']);
-	        $role->givePermissionTo('publish articles');
-	        $role->givePermissionTo('unpublish articles');
+            $role->givePermissionTo(['publish articles', 'unpublish articles']);
 	    }
 	}
 
@@ -670,19 +751,23 @@ Two notes about Database Seeding:
 
 ## Extending
 
-If you need to extend or replace the existing `Role` or `Permission` models you just need to
-keep the following things in mind:
+If you need to EXTEND the existing `Role` or `Permission` models note that:
+
+- Your `Role` model needs to extend the `Spatie\Permission\Models\Role` model
+- Your `Permission` model needs to extend the `Spatie\Permission\Models\Permission` model
+
+If you need to REPLACE the existing `Role` or `Permission` models you need to keep the
+following things in mind:
 
 - Your `Role` model needs to implement the `Spatie\Permission\Contracts\Role` contract
 - Your `Permission` model needs to implement the `Spatie\Permission\Contracts\Permission` contract
-- You can publish the configuration with this command:
+
+In BOTH cases, whether extending or replacing, you will need to specify your new models in the configuration. To do this you must update the `models.role` and `models.permission` values in the configuration file after publishing the configuration with this command:
 
 ```bash
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="config"
 ```
-  
-  And update the `models.role` and `models.permission` values
-
+ 
 
 ## Cache
 
@@ -697,6 +782,9 @@ $user->syncRoles(params);
 $role->givePermissionTo('edit articles');
 $role->revokePermissionTo('edit articles');
 $role->syncPermissions(params);
+$permission->assignRole('writer');
+$permission->removeRole('writer');
+$permission->syncRoles(params);
 ```
 
 HOWEVER, if you manipulate permission/role data directly in the database instead of calling the supplied methods, then you will not see the changes reflected in the application unless you manually reset the cache.

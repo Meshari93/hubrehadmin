@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Image;
+use Storage;
 use App\Picture;
 
 
@@ -130,12 +131,38 @@ class PropertyController extends Controller
  //////////////////////////////////////////////////////////////////
                  if ($request->hasFile('image')) {
                    $imagename = $request->image;
+//????????????????????????????????
+                     // $filename =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
+                     // // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
+                     // Image::make($filename)->resize(1024, 640);
+                     // //->save(public_path('/images/store/sectionimage/') . $filename);
+                     //
+                     //  Storage::disk('s3')->put($filename, fopen($request->file($filename), 'r+'), 'public');
+                     //  //????????????????????????????????
 
-                     $filename =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
-                     $imagename->move(public_path('/images/store/sectionimage/'), $filename);
-                     // Image::make($imagename)->resize(1024, 640)->save(public_path('/images/store/sectionimage/') . $filename);
 
-                     $property->picture_home                =  $filename;
+                      //get filename with extension
+
+        $filenamewithextension = $request->file('image')->getClientOriginalName();
+
+        //get filename without extension
+
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+
+        //get file extension
+
+        $extension = $request->file('image')->getClientOriginalExtension();
+
+         //filename to store
+
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+        //Upload File to s3
+
+        Storage::disk('s3')->put($filenametostore, fopen($request->file('image'), 'r+'), 'public');
+
+
+                      $property->picture_home    =  $filenametostore;
 
                    } else {
                         $filename = 'avatar.png';

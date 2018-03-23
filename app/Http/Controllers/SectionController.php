@@ -220,9 +220,14 @@ class SectionController extends Controller
              $i = $i + 1;
              $img = 'picture' .$i;
              $filename =  time() . $i . '.' . $imagename->getClientOriginalExtension();
-             $imagename->move(public_path('/images/store/sectionimage/'), $filename);
+             // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
 
-             // Image::make($imagename)->resize(1024, 640)->save(public_path('/images/store/sectionimage/') . $filename);
+            $filenametostore =  Image::make($imagename)->resize(1024, 640);
+
+             //////////
+             Storage::disk('s3')->put($filenametostore, fopen($request->file($filename), 'r+'), 'public');
+             //////////
+
              $sectionimage = Picture::where('section_id', '=', $id)->update([$img => $filename]);
            }
          }

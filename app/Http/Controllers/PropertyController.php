@@ -134,7 +134,7 @@ class PropertyController extends Controller
 //????????????????????????????????
                      // $filename =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
                      // // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
-                     // Image::make($filename)->resize(1024, 640);
+                     Image::make($filename)->resize(24, 40);
                      // //->save(public_path('/images/store/sectionimage/') . $filename);
                      //
                      //  Storage::disk('s3')->put($filename, fopen($request->file($filename), 'r+'), 'public');

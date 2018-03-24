@@ -130,33 +130,17 @@ class PropertyController extends Controller
               $property_id = $property->id;
  //////////////////////////////////////////////////////////////////
                  if ($request->hasFile('image')) {
-                   $imagename = $request->image;
-//????????????????????????????????
-                     // $filename =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
-                     // // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
-                     // //->save(public_path('/images/store/sectionimage/') . $filename);
-                     //
-                     //  Storage::disk('s3')->put($filename, fopen($request->file($filename), 'r+'), 'public');
-                     //  //????????????????????????????????
+                   $imagename = $request->file('image');
+//??????????????????
 
+          $filenametostore =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
 
-                      //get filename with extension
+             $image = Image::make(request()->file('image'))->resize(400,300) ;
+              // $img->resize(320, 240);
+              $path = Storage::disk('s3')->put($filenametostore, (string)$image);
 
-        $filenamewithextension = $request->file('image')->getClientOriginalName();
-        //get filename without extension
-
-        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-          //get file extension
-         $extension = $request->file('image')->getClientOriginalExtension();
-          //filename to storeww
-
-          $filenametostore = Image::make($filenamewithextension)->resize(24, 40);
-        $filenametostore = $request->user_id .'_'.time().'.'.$extension;
-        //Upload File to s3
-
-        Storage::disk('s3')->put($filenametostore, fopen($request->file('image'), 'r+'), 'public');
-
-        $property->picture_home    =  $filenametostore;
+                // Storage::disk('s3')->put($filenametostore, fopen($imagename, 'r+'), 'public');
+         $property->picture_home    =  $filename;
 
              } else {
                   $filename = 'avatar.png';

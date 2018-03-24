@@ -98,7 +98,7 @@ class PropertyController extends Controller {
             $imagename = $request->file('image');
             $filename = $request->user_id . '-' . time() . '.' . $imagename->getClientOriginalExtension();
             $image = Image::make(request()->file('image'))->resize(400, 300)->stream();
-            Storage::disk('s3')->put('public/porpertyImage' . $filename, $image->__toString(), '\public');
+            Storage::disk('s3')->put('public/porpertyImage/' . $filename, $image->__toString(), '\public');
             $property->picture_home = $filename;
         } else {
             $filename = 'avatar.png';

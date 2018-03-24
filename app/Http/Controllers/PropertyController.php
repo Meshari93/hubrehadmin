@@ -139,9 +139,9 @@ class PropertyController extends Controller
               // $img->resize(320, 240);
 
               // Storage::disk('s3')->put($filename, $image->__toString());
-              $file = Storage::disk('s3')->get('public/'.$filename);
+              // $file = Storage::disk('s3')->get('public/'.$filename);
 
-               Storage::disk('s3')->put($file , $image->__toString(), '\public');
+               Storage::disk('s3')->put('public/' . $filename , $image->__toString(), '\public');
          $property->picture_home    =  $filename;
 
              } else {

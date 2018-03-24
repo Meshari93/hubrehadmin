@@ -143,30 +143,24 @@ class PropertyController extends Controller
                       //get filename with extension
 
         $filenamewithextension = $request->file('image')->getClientOriginalName();
-
-        Image::make($filenamewithextension)->resize(24, 40);
+         //Image::make($filenamewithextension)->resize(24, 40);
         //get filename without extension
 
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+          //get file extension
+         $extension = $request->file('image')->getClientOriginalExtension();
+          //filename to store
 
-
-        //get file extension
-
-        $extension = $request->file('image')->getClientOriginalExtension();
-
-         //filename to store
-
-        $filenametostore = $filename.'_'.time().'.'.$extension;
+        $filenametostore = $request->user_id .'_'.time().'.'.$extension;
         //Upload File to s3
 
         Storage::disk('s3')->put($filenametostore, fopen($request->file('image'), 'r+'), 'public');
 
+        $property->picture_home    =  $filenametostore;
 
-                      $property->picture_home    =  $filenametostore;
-
-                   } else {
-                        $filename = 'avatar.png';
-                  }
+             } else {
+                  $filename = 'avatar.png';
+            }
 
                   $property->save();
  ///////////////////////////

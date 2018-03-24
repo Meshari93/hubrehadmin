@@ -10,6 +10,7 @@ use App\Section;
 use App\Property;
 use App\Price;
 use App\Serf;
+use Storage;
 use App\Picture;
 use DB;
 
@@ -107,9 +108,28 @@ class SectionController extends Controller
             $i = $i + 1;
             $img = 'picture' .$i;
             // $imagename  = $request->file1[0];
-            $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
-            $imagename->move(public_path('/images/store/sectionimage/'), $filename);
+// $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
+            //$imagename->move(public_path('/images/store/sectionimage/'), $filename);
 
+
+//???????????????????????????????????
+$filenamewithextension = $request->file('image')->getClientOriginalName();
+
+//Image::make($filenamewithextension)->resize(24, 40);
+//get filename without extension
+// $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+//get file extension
+$filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
+// $extension = $request->file('image')->getClientOriginalExtension();
+ //filename to store
+// $filenametostore = $filename.'_'.time().'.'.$extension;
+//Upload File to s3
+Storage::disk('s3')->put($filename, fopen($request->file('image'), 'r+'), 'public');
+
+
+//        $property->picture_home    =  $filenametostore;
+
+//??????????????????????????
             // Image::make($imagename)->resize(1024, 640)->save(public_path('/images/store/sectionimage/') . $filename);
             $sectionimage-> $img                =  $filename;
          }

@@ -135,9 +135,10 @@ class PropertyController extends Controller
 
           $filename =   $request->user_id . '-' .time() . '.' . $imagename->getClientOriginalExtension();
 
-             $image = Image::make(request()->file('image'))->resize(400,300) ;
+             $image = Image::make(request()->file('image'))->resize(400,300)->stream() ;
               // $img->resize(320, 240);
-              $path = Storage::disk('s3')->put($filename, (string)$image);
+
+              Storage::disk('s3')->put($filename, $image->__toString());
 
                 // Storage::disk('s3')->put($filenametostore, fopen($imagename, 'r+'), 'public');
          $property->picture_home    =  $filename;

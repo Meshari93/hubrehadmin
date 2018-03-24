@@ -143,7 +143,6 @@ class PropertyController extends Controller
                       //get filename with extension
 
         $filenamewithextension = $request->file('image')->getClientOriginalName();
-         //Image::make($filenamewithextension)->resize(24, 40);
         //get filename without extension
 
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
@@ -153,6 +152,7 @@ class PropertyController extends Controller
 
         $filenametostore = $request->user_id .'_'.time().'.'.$extension;
         //Upload File to s3
+        Image::make($filenametostore)->resize(24, 40);
 
         Storage::disk('s3')->put($filenametostore, fopen($request->file('image'), 'r+'), 'public');
 

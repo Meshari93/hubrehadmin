@@ -140,7 +140,7 @@ class PropertyController extends Controller
 
               // Storage::disk('s3')->put($filename, $image->__toString());
 
-                Storage::disk('s3')->put($filename, $image->__toString(), 'public/');
+                Storage::disk('s3')->put($filename, $image->__toString(), '\public');
          $property->picture_home    =  $filename;
 
              } else {

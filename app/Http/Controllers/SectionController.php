@@ -166,7 +166,7 @@ class SectionController extends Controller {
                 $i = $i + 1;
                 $img = 'picture' . $i;
                 $filename = time() . $i . '.' . $imagename->getClientOriginalExtension();
-                // $image = Image::make($imagename)->resize(400, 300)->stream();
+                // $image =   Image::make($imagename)->resize(400, 300)->stream();
                 Storage::disk('s3')->put('public/sectionImage/' . $filename, $imagename->__toString(), '\public');
 
                  $sectionimage = Picture::where('section_id', '=', $id)->update([$img => $filename]);

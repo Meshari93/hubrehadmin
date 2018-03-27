@@ -19,7 +19,7 @@
                         <form method="POST" action="{{ url('/section/' . $section->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
-                              <input  name="property_id" type="number" hidden value="{{$property_id}}" >
+                              <input  name="property_id" type="number" hidden value="{{$section->property_id}}" >
                             @include ('property.section.form', ['submitButtonText' => 'Update'])
                         </form>
                     </div>

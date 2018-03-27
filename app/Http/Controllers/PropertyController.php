@@ -140,7 +140,8 @@ class PropertyController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id) {
-        $validatedData = $request->validate(['name' => 'required|string|max:191', 'user_id' => 'required|integer|max:10', 'type' => 'required|string|max:191', 'phon_num_one' => 'required|integer', 'phon_num_two' => 'integer', 'time_entry' => 'required|string', 'time_out' => 'required|string', 'describstion' => 'required|string|max:500', 'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:2048', ]);
+        $validatedData = $request->validate(['name' => 'required|string|max:191', 'user_id' => 'required|integer|max:10', 'type' => 'required|string|max:191', 'phon_num_one' => 'required|integer', 'phon_num_two' => 'integer', 'time_entry' => 'required|string', 'time_out' => 'required|string', 'describstion' => 'required|string|max:500',
+        'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:2048', ]);
         $requestData = $request->all();
         $property = Property::findOrFail($id);
 

@@ -45,8 +45,9 @@ class SectionController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request) {
+      // return dd (file('file1'));
         $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer', 'capacity' => 'required|integer', 'property_id' => 'required|integer', 'typical_day' => 'required|integer', 'weekend' => 'required|integer', 'feast' => 'required|integer',
-        'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
         $section = new Section;
         $section->name = $request->name;
@@ -69,7 +70,7 @@ class SectionController extends Controller {
         $sectionimage = new Picture;
 
         if ($request->hasFile('file1')) {
-          foreach ($request->file('file1') as $imagename) {
+           foreach ($request->file1 as $imagename) {
             if ($i > 15) { break; }
             $i = $i + 1;
             $img = 'picture' .$i;
@@ -151,7 +152,7 @@ class SectionController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id) {
-      
+
         $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer|max:1000000', 'capacity' => 'required|integer|max:1000000', 'property_id' => 'required|integer|max:1000000', 'typical_day' => 'required|integer|max:100000000', 'weekend' => 'required|integer|max:100000000', 'feast' => 'required|integer|max:100000000', 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
         // $requestData = $request->all();
         $requestsection = $request->only(['name', 'room_num', 'capacity']);

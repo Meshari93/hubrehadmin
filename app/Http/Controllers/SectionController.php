@@ -45,7 +45,9 @@ class SectionController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request) {
-        $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer', 'capacity' => 'required|integer', 'property_id' => 'required|integer', 'typical_day' => 'required|integer', 'weekend' => 'required|integer', 'feast' => 'required|integer', 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
+        $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer', 'capacity' => 'required|integer', 'property_id' => 'required|integer', 'typical_day' => 'required|integer', 'weekend' => 'required|integer', 'feast' => 'required|integer',
+        // 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
         $section = new Section;
         $section->name = $request->name;
         $section->room_num = $request->room_num;
@@ -65,20 +67,27 @@ class SectionController extends Controller {
         $section->serves()->attach($sectionserves);
         $i = 0;
         $sectionimage = new Picture;
+
         if ($request->hasFile('file1')) {
-            foreach ($request->file1 as $imagename) {
-                if ($i > 11) {break;}
-                $i = $i + 1;
-                $img = 'picture' . $i;
-                // $imagename  = $request->file1[0];
-                $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
-                // $image = Image::make($imagename)->resize(400, 300)->stream();
-                Storage::disk('s3')->put('public/sectionImage/' . $filename, $imagename->__toString(), '\public');
-                   $sectionimage->$img = $filename;
-            }
-        } else {
-            $filename = 'avatar.png';
-        }
+          foreach ($request->file1 as $imagename) {
+            if ($i > 11) { break; }
+            $i = $i + 1;
+            $img = 'picture' .$i;
+            // $imagename  = $request->file1[0];
+            $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
+            // $image = Image::make($imagename)->resize(24, 40);
+            // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
+            $image = Image::make($imagename)->resize(24, 40)->stream();
+            Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
+
+            $sectionimage-> $img                =  $filename;
+         }
+          } else {
+               $filename = 'avatar.png';
+         }
+
+
+
         $sectionimage->section_id = $sectionprise_id;
         $sectionimage->save();
 

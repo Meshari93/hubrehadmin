@@ -83,7 +83,7 @@
   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-md-offset-1 m-b-30 m-t-30">
       <div class="form-group form-float {{ $errors->has('file1') ? 'has-error' : ''}}">
         <label class="form-label">Section  Picture:</label>
-           <input name="file1[][image]" type="file" multiple max="15">
+           <input name="file1[][image]" type="file" multiple  >
              {!! $errors->first('file1', '<p class="help-block">:message</p>') !!}
     </div>
   </div>

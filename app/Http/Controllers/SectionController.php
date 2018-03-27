@@ -151,6 +151,7 @@ class SectionController extends Controller {
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id) {
+      
         $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer|max:1000000', 'capacity' => 'required|integer|max:1000000', 'property_id' => 'required|integer|max:1000000', 'typical_day' => 'required|integer|max:100000000', 'weekend' => 'required|integer|max:100000000', 'feast' => 'required|integer|max:100000000', 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
         // $requestData = $request->all();
         $requestsection = $request->only(['name', 'room_num', 'capacity']);

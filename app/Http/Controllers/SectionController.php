@@ -77,7 +77,7 @@ class SectionController extends Controller {
             $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
             // $image = Image::make($imagename)->resize(24, 40);
             // $imagename->move(public_path('/images/store/sectionimage/'), $filename);
-            $image = Image::make($imagename)->resize(24, 40)->stream();
+            $image = Image::make($imagename)->resize(240, 340)->stream();
             Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
 
             $sectionimage-> $img                =  $filename;

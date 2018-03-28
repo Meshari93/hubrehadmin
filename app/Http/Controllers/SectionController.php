@@ -47,7 +47,7 @@ class SectionController extends Controller {
     public function store(Request $request) {
       // return dd (file('file1'));
         $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer', 'capacity' => 'required|integer', 'property_id' => 'required|integer', 'typical_day' => 'required|integer', 'weekend' => 'required|integer', 'feast' => 'required|integer',
-        // 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'file1.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
         $section = new Section;
         $section->name = $request->name;
@@ -57,6 +57,7 @@ class SectionController extends Controller {
          $section->save();
 
         $sectionprise_id = $section->id;
+
         $sectionprise = new Price;
         $sectionprise->typical_day = $request->typical_day;
         $sectionprise->weekend = $request->weekend;
@@ -67,23 +68,26 @@ class SectionController extends Controller {
         $sectionserves = $request->serves;
         $section->serves()->attach($sectionserves);
         $i = 0;
+
         $sectionimage = new Picture;
 
         if ($request->hasFile('file1')) {
-           foreach ($request->file1 as $imagename) {
-            if ($i > 15) { break; }
-            $i = $i + 1;
-            $img = 'picture' .$i;
-            // $imagename  = $request->file1[0];
-            $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
-             $image = Image::make($imagename)->resize(240, 340)->stream();
-            Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
+        foreach ($request->file1 as $imagename) {
+          if ($i > 11) { break; }
+          $i = $i + 1;
+          $img = 'picture' .$i;
+          // $imagename  = $request->file1[0];
+          $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
+            $image = Image::make($imagename)->resize(400, 300)->stream();
+           Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
 
-            $sectionimage-> $img    =  $filename;
-         }
-          } else {
-               $filename = 'avatar.png';
-         }
+          // $image->save(public_path('/images/store/sectionimage/') . $filename);
+           $sectionimage-> $img                =  $filename;
+       }
+        } else {
+             $filename = 'avatar.png';
+       }
+
         $sectionimage->section_id = $sectionprise_id;
         $sectionimage->save();
 
@@ -153,7 +157,7 @@ class SectionController extends Controller {
      */
     public function update(Request $request, $id) {
 
-        $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer|max:1000000', 'capacity' => 'required|integer|max:1000000', 'property_id' => 'required|integer|max:1000000', 'typical_day' => 'required|integer|max:100000000', 'weekend' => 'required|integer|max:100000000', 'feast' => 'required|integer|max:100000000', 'file1.*.image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
+        $validatedData = $request->validate(['name' => 'required|string|max:100', 'room_num' => 'required|integer|max:1000000', 'capacity' => 'required|integer|max:1000000', 'property_id' => 'required|integer|max:1000000', 'typical_day' => 'required|integer|max:100000000', 'weekend' => 'required|integer|max:100000000', 'feast' => 'required|integer|max:100000000', 'file1.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', ]);
         // $requestData = $request->all();
         $requestsection = $request->only(['name', 'room_num', 'capacity']);
         $section = Section::findOrFail($id);
@@ -170,7 +174,7 @@ class SectionController extends Controller {
                 $i = $i + 1;
                 $img = 'picture' .$i;
                 // $imagename  = $request->file1[0];
-                $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
+                $filename = $request->property_id .'-'. $id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
                 $image = Image::make($imagename)->resize(440, 240)->stream();
                 Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
                 $sectionimage = Picture::where('section_id', '=', $id)->update([$img => $filename]);

@@ -38,10 +38,11 @@
                       @endforeach
                   </ul>
               @endif
-              <form method="POST" action="{{ url('/property') }}" accept-charset="UTF-8" id="wizard_with_validation"
+
+              <form method="POST" action="{{ url('/property') }}" accept-charset="UTF-8" id="form_advanced_validation"
                 enctype="multipart/form-data">
                   {{ csrf_field() }}
-                  @include ('property.property.form', ['submitButtonText' => 'Update'])
+                  @include ('property.property.form', ['submitButtonText' => 'Create'])
               </form>
             </div>
 
@@ -49,4 +50,5 @@
     </div>
 </div>
 <!-- #END# Inline Layout | With Floating Label -->
+
   @endsection

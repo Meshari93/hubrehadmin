@@ -11,16 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
-     // require('adminbsb-materialdesign');
-    // require('bootstrap-select');
-     // require('jquery-slimscroll');
-     // require('node-waves');
-     // require('jquery-countto');
-     // require('raphael');
-     // require('chart.js');
-    //  require('flot');
-    //  require('jquery-sparkline');
-     // require('morris.js');
+
 } catch (e) {}
 
 

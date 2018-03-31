@@ -74,7 +74,7 @@ class PropertyController extends Controller {
      */
     public function store(Request $request) {
         $validatedData = $request->validate(['name' => 'required|string|max:191',
-         'type' => 'required|string|max:191', 'phon_num_one' => 'required|integer', 'phon_num_two' => 'integer', 'time_entry' => 'required|string', 'time_out' => 'required|string', 'describstion' => 'required|string|max:500', 'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:2048', ]);
+         'type' => 'required|string|max:191|min:5', 'phon_num_one' => 'required|string', 'phon_num_two' => 'string', 'time_entry' => 'required|string', 'time_out' => 'required|string', 'describstion' => 'required|string|max:500', 'image' => 'required|image|mimes:jpeg,jpg,png,gif|max:2048', ]);
         $property = new Property;
         $property->name = $request->name;
         if (Auth::user()->hasRole('admin')) {
@@ -97,8 +97,10 @@ class PropertyController extends Controller {
         if ($request->hasFile('image')) {
             $imagename = $request->file('image');
             $filename = $request->user_id . '-' . time() . '.' . $imagename->getClientOriginalExtension();
-            $image = Image::make(request()->file('image'))->resize(400, 300)->stream();
-            Storage::disk('s3')->put('public/porpertyImage/' . $filename, $image->__toString(), '\public');
+            $image = Image::make(request()->file('image'))->resize(400, 300);
+            // ->stream();
+            // Storage::disk('s3')->put('public/porpertyImage/' . $filename, $image->__toString(), '\public');
+            $image->save(public_path('/images/store/sectionimage/') . $filename);
             $property->picture_home = $filename;
         } else {
             $filename = 'avatar.png';
@@ -149,7 +151,8 @@ class PropertyController extends Controller {
             $imagename = $request->image;
             $filename = $property->user_id . '-' . time() . '.' . $imagename->getClientOriginalExtension();
              $image = Image::make(request()->file('image'))->resize(400, 300)->stream();
-            Storage::disk('s3')->put('public/porpertyImage/' . $filename, $image->__toString(), '\public');
+            // Storage::disk('s3')->put('public/porpertyImage/' . $filename, $image->__toString(), '\public');
+            $image->save(public_path('/images/store/sectionimage/') . $filename);
               $property->picture_home = $filename;
         }
         $property->update($requestData);

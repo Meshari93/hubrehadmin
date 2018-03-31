@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
-<!-- <head> -->
+ <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
          <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
@@ -14,8 +14,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('/js/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
+     <link href="{{ asset('/js/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
 </head>
 
         @role('admin|owner')
@@ -56,12 +57,12 @@
 
     <!-- Autosize Plugin Js -->
      <script src="{{ asset('/js/plugins/autosize/autosize.js') }}"></script>
+     <!-- Moment Plugin Js -->
+     <script src="{{ asset('/js/plugins/momentjs/moment.js') }}"></script>
 
      <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="{{ asset('/js/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
 
-    <!-- Moment Plugin Js -->
-    <script src="{{ asset('/js/plugins/momentjs/moment.js') }}"></script>
 
     <script src="{{ asset('/js/plugins/morrisjs/morris.js') }}"></script>
     <script src="{{ asset('/js/plugins/chartjs/Chart.bundle.js') }}"></script>
@@ -96,15 +97,21 @@
 
     <!-- Dropzone Plugin Js -->
     <script src="{{ asset('/js/plugins/dropzone/dropzone.js') }}"></script>
-
+    <!-- Google Maps API Js -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1Lc3Crvsn-txbqyvCCnonJ3W9A8M_bY0&callback=initMap"
+async defer></script>
 
     <!-- Custom Js -->
     <script src="{{ asset('/js/admin.js') }}"></script>
     <script src="{{ asset('/js/pages/index.js') }}"></script>
     <script src="{{ asset('/js/pages/forms/basic-form-elements.js') }}"></script>
     <script src="{{ asset('/js/pages/forms/advanced-form-elements.js') }}"></script>
+     <script src="{{ asset('/js/pages/forms/form-validation.js') }}"></script>
     <script src="{{ asset('/js/pages/forms/form-wizard.js') }}"></script>
-
+    <!-- GMaps PLugin Js -->
+    <script src="{{ asset('/js/plugins/gmaps/gmaps.js') }}"></script>
+     <!-- Custom Js -->
+     <script src="{{ asset('/js/pages/maps/google.js') }}"></script>
     <!-- Demo Js -->
     <script src="{{ asset('/js/demo.js') }}"></script>
 

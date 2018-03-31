@@ -79,9 +79,9 @@ class SectionController extends Controller {
           // $imagename  = $request->file1[0];
           $filename = $request->property_id .'-'. $sectionprise_id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
             $image = Image::make($imagename)->resize(400, 300)->stream();
-           Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
+           // Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
 
-          // $image->save(public_path('/images/store/sectionimage/') . $filename);
+          $image->save(public_path('/images/store/sectionimage/') . $filename);
            $sectionimage-> $img                =  $filename;
        }
         } else {
@@ -176,7 +176,8 @@ class SectionController extends Controller {
                 // $imagename  = $request->file1[0];
                 $filename = $request->property_id .'-'. $id . '-'. time() . $i . '.' . $imagename->getClientOriginalExtension();
                 $image = Image::make($imagename)->resize(440, 240)->stream();
-                Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
+                //Storage::disk('s3')->put('public/sectionImage/' . $filename, $image->__toString(), '\public');
+                $image->save(public_path('/images/store/sectionimage/') . $filename);
                 $sectionimage = Picture::where('section_id', '=', $id)->update([$img => $filename]);
             }
         }

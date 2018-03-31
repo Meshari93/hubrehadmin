@@ -7705,7 +7705,7 @@ fieldset[disabled] .form-control {
 /* Jquery Nestable ============================= */
 .dd-handle {
   background-color: #f9f9f9 !important; }
-  .dd-handle:hover {
+.dd-handle:hover {
     color: #2196F3; }
 
 .nestable-dark-theme .dd-handle {
@@ -8039,4 +8039,3 @@ html.ie11 .dropdown-menu ul.menu li a {
 
 html.ie11 .bs-searchbox .form-control {
   width: 90%; }
-

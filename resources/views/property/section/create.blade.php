@@ -19,7 +19,7 @@
                         <form method="POST" action="{{ url('/section') }}"   accept-charset="UTF-8" class="form-horizontal  " enctype="multipart/form-data" style="background-color:#fff;">
                             {{ csrf_field() }}
                             <input  name="property_id" type="number" hidden value="{{$property_id}}" >
-                            @include ('property.section.form')
+                            @include ('property.section.form', ['submitButtonText' => 'Create'])
                         </form>
 
                         </div>
